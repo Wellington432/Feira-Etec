@@ -11,3 +11,33 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model usuario {
+  id String @id @default(uuid())
+  nome String
+  email String @unique
+  senha String 
+
+  produto  produto[]
+  criando_em DateTime @default(now())
+  modificado_em DateTime @default(now())
+
+
+  @@map ("Usuario")
+}
+
+model produto {
+  codigo String @id @default(uuid())
+  nome String
+  validade DateTime
+  preco Float
+
+   
+   usuarioId String
+   usuario  usuario @relation(fields: [usuarioId], references: [id])
+
+     criando_em DateTime @default(now())
+  modificado_em DateTime @updatedAt
+
+  @@map("Produto")
+}
