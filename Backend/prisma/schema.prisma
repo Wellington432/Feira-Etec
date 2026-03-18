@@ -22,6 +22,7 @@ model usuario {
 
 
   produto  produto[]
+  pedido pedido[]
   criando_em DateTime @default(now())
   modificado_em DateTime @default(now())
 
@@ -30,11 +31,11 @@ model usuario {
 }
 
 model produto {
-  codigo String @id @default(uuid())
+  id String @id @default(uuid())
   nome String
-  validade DateTime
+  estoque Int
   preco String
-  quantidade Int
+  
 
    
    usuarioId String
@@ -42,42 +43,42 @@ model produto {
 
      criando_em DateTime @default(now())
   modificado_em DateTime @updatedAt
-  categoria categoria[]
-  relatorio relatorio[]
+   itens item[]
+  
+  
 
   @@map("Produto")
 }
 
-
-model categoria{
+model pedido{
   id String @id @default(uuid())
-  nome String
-  tipo String @unique
+  total String
+  data_pedido DateTime
 
-  idproduto String
-  Produto produto @relation(fields: [idproduto],references: [codigo])
+  usuarioId String
+  usuario usuario @relation(fields: [usuarioId], references: [id])
 
-  @@map("categoria")
- criando_em DateTime? @default(now())
- modificado_em DateTime @updatedAt
+  criando_em DateTime @default(now())
+  modificado_em DateTime @updatedAt
+  itens item[]
 
+  @@map("Pedido")
+} 
 
+model item {
+  id String @id @default(uuid())
+  quantidade Int
+  preco String
 
+  produtoId String
+  produto produto @relation(fields: [produtoId], references: [id])
+
+  pedidoId String
+  pedido pedido @relation(fields: [pedidoId], references: [id])
+
+  criando_em DateTime @default(now())
+  modificado_em DateTime @updatedAt
+
+  @@map("Item")
 }
 
-model relatorio{
-  id String @id @default(uuid())
-  descricao String
-  data DateTime?
-
-  idproduto String
-  produto produto @relation(fields: [idproduto],references: [codigo])
-
-  @@map("relatorio")
-   criando_em DateTime? @default(now())
- modificado_em DateTime @updatedAt
-
-
-  
-}
- 
