@@ -17,6 +17,9 @@ model usuario {
   nome String
   email String @unique
   senha String 
+  cpf String
+  cep String
+
 
   produto  produto[]
   criando_em DateTime @default(now())
@@ -30,7 +33,8 @@ model produto {
   codigo String @id @default(uuid())
   nome String
   validade DateTime
-  preco Float
+  preco String
+  quantidade Int
 
    
    usuarioId String
@@ -38,6 +42,42 @@ model produto {
 
      criando_em DateTime @default(now())
   modificado_em DateTime @updatedAt
+  categoria categoria[]
+  relatorio relatorio[]
 
   @@map("Produto")
 }
+
+
+model categoria{
+  id String @id @default(uuid())
+  nome String
+  tipo String @unique
+
+  idproduto String
+  Produto produto @relation(fields: [idproduto],references: [codigo])
+
+  @@map("categoria")
+ criando_em DateTime? @default(now())
+ modificado_em DateTime @updatedAt
+
+
+
+}
+
+model relatorio{
+  id String @id @default(uuid())
+  descricao String
+  data DateTime?
+
+  idproduto String
+  produto produto @relation(fields: [idproduto],references: [codigo])
+
+  @@map("relatorio")
+   criando_em DateTime? @default(now())
+ modificado_em DateTime @updatedAt
+
+
+  
+}
+ 
