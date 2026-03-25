@@ -80,6 +80,5 @@ model item {
   modificado_em DateTime @updatedAt
 
   @@map("Item")
-  pedidoId String
-produtoId String
+
 }
