@@ -1,12 +1,10 @@
-import { Router, Request, Response, json} from 'express';
+import {FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
 
-const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-    return(
-         //throw new Error('Erro ao fazer uma requisição');
-        
-        res.json ({nome : 'wellington'})
-    )
+export async function router(fastify: FastifyInstance, options: FastifyPluginOptions) {
+fastify.get('/teste', async (request: FastifyRequest, reply: FastifyReply) => {
+   return{OK:true}
+ 
 })
-export {router};
+
+}
