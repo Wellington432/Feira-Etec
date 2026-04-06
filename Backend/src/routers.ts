@@ -1,4 +1,5 @@
 import {FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
+import { CreateUserController } from "./controllers/user/CreateUserControler";
 
 
 export async function router(fastify: FastifyInstance, options: FastifyPluginOptions) {
@@ -7,4 +8,8 @@ fastify.get('/teste', async (request: FastifyRequest, reply: FastifyReply) => {
  
 })
 
+fastify.post('/users', async (request: FastifyRequest, reply: FastifyReply) => {
+  return new CreateUserController().handle(request, reply);
+
+})
 }

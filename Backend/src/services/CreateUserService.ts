@@ -1,4 +1,4 @@
-import prismaClient from "./prisma";
+import prismaClient from "../prisma";
 
 //Interface define os dados que serao usados com tipagem
 

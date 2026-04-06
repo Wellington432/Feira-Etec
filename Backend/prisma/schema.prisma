@@ -17,8 +17,7 @@ model usuario {
   nome String
   email String @unique
   senha String 
-  cpf String
-  cep String
+  status Boolean
 
 
   produto  produto[]
