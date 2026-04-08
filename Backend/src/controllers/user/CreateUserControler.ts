@@ -6,7 +6,8 @@ export class CreateUserController{
 async handle(request: FastifyRequest, reply: FastifyReply){
 
 const createUserService = new CreateUserService();  
-const user = await createUserService.execute(request.body as any);
+const {nome, email, senha} = request.body as any;
+const user = await createUserService.execute({nome, email, senha});
 reply.send(user);
 
 }
