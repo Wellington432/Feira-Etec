@@ -10,21 +10,9 @@ interface CreateAdminRequest{
 }
 class CreateAdminService{
   async execute(){
+     const senhaHash = await bcrypt.hash("admin123", 12);
 
-    const adminExiste = await prismaClient.usuario.findFirst({
-      where:{
-        email: "admin@example.com",
-        nome: "Admin",
-        senha: "admin123"
-      }
-    });
-
-    if(adminExiste){
-      throw new Error("Admin já existe!");
-    }
-
-    const senhaHash = await bcrypt.hash("admin123", 8);
-
+     
     const admin = await prismaClient.usuario.create({
       data:{
         nome: "Admin",
@@ -32,6 +20,21 @@ class CreateAdminService{
         senha: senhaHash
       }
     });
+     
+
+    const adminExiste = await prismaClient.usuario.findFirst({
+      where:{
+        email: "admin@example.com",
+        nome: "Admin"
+       
+   } });
+
+    if(adminExiste){
+      throw new Error("Admin já existe!");
+    }
+   
+   
+
 
     return admin;
   }
