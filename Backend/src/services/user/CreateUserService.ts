@@ -1,43 +1,48 @@
-import prismaClient from "../prisma";
-
-//Interface define os dados que serao usados com tipagem
+import prismaClient from "../../prisma";
+import bcrypt from "bcryptjs";
 
 interface CreateUserRequest{
-nome: String;
-email: String;
-senha: String;
-
+  nome: string;
+  email: string;
+  senha: string;
 }
 
 class CreateUserService{
 
-async execute({nome, email, senha} :CreateUserRequest){
+  async execute({ nome, email, senha }: CreateUserRequest){
 
-if(!nome || !email || !senha){
-throw new Error("Dados ausentes!");
+   
+    if(!nome || !email || !senha){
+      throw new Error("Dados ausentes!");
+    }
+
+   
+    const userExiste = await prismaClient.usuario.findFirst({
+      where: { email }
+    });
+
+    if(userExiste){
+      throw new Error("Email já cadastrado!");
+    }
+
+    // 🔹 criptografa senha
+    const senhaHash = await bcrypt.hash(senha, 12);
+
+    // 🔹 cria usuário
+    const user = await prismaClient.usuario.create({
+      data:{
+        nome,
+        email,
+        senha: senhaHash, 
+      },
+      select:{
+        id: true,
+        email: true
+      }
+    });
+
+    return user;
+  }
 }
 
-const user = await prismaClient.usuario.create({
-data:{
-nome:nome,
-email:email,
-senha:senha,
-
-},
-select:{
-    id:true,
-    email:true,
-    senha:true
-}
-
-});
-
-return user;
-
-}
-
-}
-
-//Torna a classe pública
-
-export {CreateUserService}
+export { CreateUserService };
