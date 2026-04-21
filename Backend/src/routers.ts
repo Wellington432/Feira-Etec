@@ -8,7 +8,7 @@ fastify.get('/teste', async (request: FastifyRequest, reply: FastifyReply) => {
  
 })
 
-fastify.post('/users', async (request: FastifyRequest, reply: FastifyReply) => {
+fastify.post('/cadastro', async (request: FastifyRequest, reply: FastifyReply) => {
   return new CreateUserController().handle(request, reply);
 
 })
