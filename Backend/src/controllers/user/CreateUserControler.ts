@@ -1,5 +1,6 @@
 import {FastifyRequest, FastifyReply } from  'fastify'
 import { CreateUserService } from '../../services/user/CreateUserService';
+import bcrypt from "bcryptjs";
 
 export class CreateUserController{
 
@@ -18,7 +19,8 @@ if(email.length < 5 || !email.includes("@")){
  if(!senhaRegex.test(senha)){
     return reply.status(400).send({error: "A senha deve conter no mínimo 8 caracteres, incluindo letras e números!"});
  }
- 
+
+
 
 try {   
 const createUserService = new CreateUserService(); 

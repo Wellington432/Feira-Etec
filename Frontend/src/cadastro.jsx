@@ -29,7 +29,7 @@ function Cadastro() {
   }
 
   return (
-    <div className="login">
+    <div className="Card">
       <h1>Cadastro</h1>
 
       <input
@@ -55,7 +55,9 @@ function Cadastro() {
 
 
 
-      <button onClick={handleCadastro}>Cadastrar</button>
+      <button className="btn" onClick={handleCadastro}>Cadastrar</button>
+
+      <a href="/login">Já tem uma conta? Faça login</a>
     </div>
   );
 }

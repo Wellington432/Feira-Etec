@@ -9,6 +9,8 @@ interface CreateUserRequest{
 
 class CreateUserService{
 
+
+
   async execute({ nome, email, senha }: CreateUserRequest){
 
    
@@ -23,6 +25,11 @@ class CreateUserService{
 
     if(userExiste){
       throw new Error("Email já cadastrado!");
+    }
+
+    const senhaExistent = await bcrypt.compare(senha, userExiste?.senha || "");
+    if(senhaExistent){
+      throw new Error("Senha já cadastrada!");
     }
 
     // 🔹 criptografa senha
